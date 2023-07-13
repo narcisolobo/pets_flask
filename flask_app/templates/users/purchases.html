@@ -1,0 +1,29 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- Your Purchases{% endblock title %}
+
+{% block content %}
+<h1 class="display-3 mb-3">Your Purchases</h1>
+<div class="card shadow">
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for car in cars %}
+        <tr>
+          <td class="align-middle">{{ car.make }}</td>
+          <td class="align-middle">{{ car.model }}</td>
+          <td class="align-middle">{{ car.year }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- All Pets{% endblock title %}
+
+{% block content %}
+<h1 class="display-3 mb-3">All Pets</h1>
+<p class="fs-3">Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+<div class="petd shadow">
+  <div class="petd-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Owner</th>
+          <th>Derpy?</th>
+          <th>Age</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pet in pets %}
+        <tr>
+          <td class="align-middle">{{ pet.type }}</td>
+          <td class="align-middle">{{ pet.name }}</td>
+          <td class="align-middle">
+            {{ pet.owner.first_name }}
+            {{ pet.owner.last_name }}
+          </td>
+          <td class="align-middle">{{ 'Derpy' if pet.is_derpy else 'Very Serious' }}</td>
+          <td class="align-middle">{{ pet.age }}</td>
+          <td class="d-flex align-items-center gap-2">
+            <a href="{{ url_for('one_pet', pet_id = pet.id) }}" class="btn btn-sm btn-primary fs-6">
+              <i class="bi bi-eye-fill"></i>
+            </a>
+            {% if pet.owner_id == session.user_id %}
+            <a href="{{ url_for('edit_pet', pet_id = pet.id) }}" class="btn btn-sm btn-warning fs-6">
+              <i class="bi bi-pencil-fill"></i>
+            </a>
+            <form action="{{ url_for('delete_pet', pet_id=pet.id) }}" method="POST">
+              <input type="hidden" name="pet_id" value="{{ pet.id }}" />
+              <button class="btn btn-sm btn-danger fs-6">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

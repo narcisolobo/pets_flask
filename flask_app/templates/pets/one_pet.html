@@ -1,0 +1,42 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- Pet Details{% endblock title %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <h1 class="display-3">Pet Details</h1>
+      <div class="card shadow">
+        <div class="card-body">
+          <h3 class="fs-4 card-title mb-0">{{ pet.name }} {{ pet.type }}</h3>
+          <p class="form-text text-muted mb-0">
+            Derpy? {{ "Yes" if pet.is_derpy else "No" }}
+          </p>
+          <p class="form-text text-muted mb-3">
+            Age: {{ pet.age }}
+          </p>
+        </div>
+        <div class="card-footer d-flex justify-content-end align-items-center gap-2">
+          {% if pet.owner_id == session.user_id %}          
+            <a
+              href="{{ url_for('edit_pet', pet_id = pet.id) }}"
+              class="btn btn-sm btn-warning">
+              <i class="bi bi-pencil-fill"></i>
+            </a>
+            <form action="{{ url_for('delete_pet', pet_id=pet.id) }}" method="POST">
+              <input type="hidden" name="pet_id" value="{{ pet.id }}" />
+              <button class="btn btn-sm btn-danger fs-6">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endwith %}
+
+{% endblock content %}

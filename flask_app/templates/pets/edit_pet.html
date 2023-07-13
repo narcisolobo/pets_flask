@@ -1,0 +1,78 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- Edit Pet{% endblock title %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <h1 class="display-3">Edit Pet</h1>
+      <div class="card shadow">
+        <form action="{{ url_for('edit_pet', pet_id = pet.id) }}" method="POST">
+          <input type="hidden" name="owner_id" value="{{ session.user_id }}" />
+          <input type="hidden" name="pet_id" value="{{ pet.id }}" />
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="type" class="form-label">Type:</label>
+              <input type="text" name="type" id="type" class="form-control" value="{{ pet.type }}" />
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category == 'type' %}
+                    <span class="form-text text-danger">{{ message }}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Name:</label>
+              <input type="text" name="name" id="name" class="form-control" value="{{ pet.name }}" />
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category == 'name' %}
+                    <span class="form-text text-danger">{{ message }}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <fieldset>
+                <legend>Is your pet derpy?</legend>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="is_derpy" id="yes_derpy" value="1" {{ 'checked' if pet.is_derpy else "" }}>
+                  <label class="form-check-label" for="yes_derpy">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="is_derpy" id="no_derpy" value="0" {{ 'checked' if not pet.is_derpy else "" }}>
+                  <label class="form-check-label" for="no_derpy">
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="mb-3">
+              <label for="age" class="form-label">Age:</label>
+              <input type="number" name="age" id="age" class="form-control" value="{{ pet.age }}" />
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category == 'age' %}
+                    <span class="form-text text-danger">{{ message }}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-end align-items-center gap-2">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Add Pet</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endwith %}
+
+{% endblock content %}

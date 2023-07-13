@@ -1,0 +1,45 @@
+<div class="collapse navbar-collapse" id="navbarNav">
+  <ul class="navbar-nav me-auto">
+    <li class="nav-item">
+      <a
+        href="{{ url_for('index') }}"
+        class="nav-link {{ 'active' if request.path == '/' else '' }}">
+        Home
+      </a>
+    </li>
+    {% if 'user_id' in session %}      
+    <li class="nav-item">
+      <a
+        href="{{ url_for('all_pets') }}"
+        class="nav-link {{ 'active' if request.path == '/pets' else '' }}">
+        All Pets
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        href="{{ url_for('new_pet') }}"
+        class="nav-link {{ 'active' if request.path == '/pets/new' else '' }}">
+        Add Pet
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+  {% if 'user_id' in session %}    
+  <div class="d-flex align-items-center gap-2">
+    <form action="{{ url_for('logout') }}" method="POST">
+      <button type="submit" class="btn btn-sm btn-secondary">
+        Logout
+      </button>
+    </form>
+  </div>
+  {% else %}
+  <div class="d-flex align-items-center gap-2">
+    <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-primary">
+      Login
+    </a>
+    <a href="{{ url_for('register') }}" class="btn btn-sm btn-primary">
+      Register
+    </a>
+  </div>
+  {% endif %}
+</div>

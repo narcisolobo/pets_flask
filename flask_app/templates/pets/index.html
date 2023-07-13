@@ -1,0 +1,31 @@
+{% extends "/partials/_base.html" %}
+
+{% block title %}- Home{% endblock title %}
+
+{% block content %}
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row align-items-center g-5 py-5">
+    <div class="col-lg-6">
+      <h1 class="display-5 text-body-emphasis lh-1 mb-3">
+        Flask Pets
+      </h1>
+      <p class="lead">
+        The world's pet community.
+        Put up your pet up for adoption and adopt your new pet here.
+      </p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a
+          href="{{ url_for('register') }}"
+          class="btn btn-primary btn-lg px-4 me-md-2">
+          Register
+        </a>
+        <a
+          href="{{ url_for('login') }}"
+          class="btn btn-outline-secondary btn-lg px-4">
+          Login
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
